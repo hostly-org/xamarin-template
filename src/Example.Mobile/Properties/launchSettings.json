@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Example.Mobile": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Key": "Value",
+        "APPDATA": "C:\\Users\\matt\\AppData\\Roaming"
+      }
+    }
+  }
+}
