@@ -12,7 +12,7 @@
 
 ##  1. <a name='Addingnewmigrationsusingthepackagemanagerconsole'></a>Adding new migrations using the package manager console
 Ensure that you have the `Example.Mobile.Migrations` project as your start up project otherwise it will fail to create migrations.
-####  1.1. <a name='ExampleMobileDbContext-package-manager'></a>LGPSDbContext
+####  1.1. <a name='ExampleMobileDbContext-package-manager'></a>ExampleMobileDbContext
 
 ```
 Add-Migration <MigrationName> -c ExampleMobileDbContext -p Example.Mobile.EntityFrameworkCore -o Migrations/ExampleMobile
