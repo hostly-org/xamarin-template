@@ -58,16 +58,6 @@ namespace Example.Mobile.Hosting
             _application = application;
         }
 
-        public void Run(object caller)
-        {
-            //var callerType = caller.GetType();
-
-            //var methods = callerType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic);
-            //var loadApplicationMethod = methods.Where(method => method.Name.Equals("LoadApplication")).FirstOrDefault();
-
-            //loadApplicationMethod.Invoke(caller, new object[] { Services.GetRequiredService<Application>() });
-        }
-
         public async Task StartAsync(CancellationToken cancellationToken = default)
         {
             await _hostLifetime.WaitForStartAsync(cancellationToken);
