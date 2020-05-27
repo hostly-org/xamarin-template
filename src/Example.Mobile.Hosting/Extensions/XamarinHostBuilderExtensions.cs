@@ -6,12 +6,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Example.Mobile.Hosting.Extensions
 {
     public static class XamarinHostBuilderExtensions
     {
+        public static IXamarinHostBuilder UseAppSettings(this IXamarinHostBuilder builder, Assembly assembly) 
+        {
+            return builder.ConfigureHostConfiguration(c =>
+             {
+                 c.AddCommandLine(new string[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
+                 c.AddEmbeddedJsonFile(assembly, "appsettings.json");
+                 c.AddEmbeddedJsonFile(assembly, $"appsettings.{c.Build().GetValue<string>("environment")}.json");
+             });
+        }
 
         public static IXamarinHostBuilder UseApplication<TApp>(this IXamarinHostBuilder builder) where TApp : Application
         {

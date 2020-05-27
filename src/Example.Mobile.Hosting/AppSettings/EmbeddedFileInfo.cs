@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Microsoft.Extensions.FileProviders;
 
-namespace Example.Mobile
+namespace Example.Mobile.Hosting.AppSettings
 {
-    public class EmbeddedFileInfo : IFileInfo
+    internal sealed class EmbeddedFileInfo : IFileInfo
     {
         private readonly Stream _fileStream;
 

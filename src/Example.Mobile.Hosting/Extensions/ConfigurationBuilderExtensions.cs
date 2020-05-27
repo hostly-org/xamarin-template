@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Example.Mobile.Hosting.AppSettings;
 using Microsoft.Extensions.Configuration;
 
-namespace Example.Mobile.Extensions
+namespace Example.Mobile.Hosting.Extensions
 {
-    public static class ConfigurationBuilderExtensions
+    internal static class ConfigurationBuilderExtensions
     {
         public static IConfigurationBuilder AddEmbeddedJsonFile(this IConfigurationBuilder cb,
             Assembly assembly, string name, bool optional = false)

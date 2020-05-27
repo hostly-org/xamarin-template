@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace Example.Mobile
+namespace Example.Mobile.Hosting.AppSettings
 {
-    public class EmbeddedFileProvider : IFileProvider
+    internal sealed class EmbeddedFileProvider : IFileProvider
     {
         private readonly Assembly _assembly;
 
