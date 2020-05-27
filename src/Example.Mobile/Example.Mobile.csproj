@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.development.json" />
     <None Remove="appsettings.json" />
     <None Remove="appsettings.production.json" />
@@ -40,6 +46,7 @@
     <ProjectReference Include="..\Example.Mobile.Domain\Example.Mobile.Domain.csproj" />
     <ProjectReference Include="..\Example.Mobile.EntityFrameworkCore.Sqlite\Example.Mobile.EntityFrameworkCore.Sqlite.csproj" />
     <ProjectReference Include="..\Example.Mobile.EntityFrameworkCore\Example.Mobile.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Example.Mobile.Hosting\Example.Mobile.Hosting.csproj" />
     <ProjectReference Include="..\Example.Mobile.Infrastructure\Example.Mobile.Infrastructure.csproj" />
   </ItemGroup>
 
@@ -50,10 +57,6 @@
     <EmbeddedResource Update="Views\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

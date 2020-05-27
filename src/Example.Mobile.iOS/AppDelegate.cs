@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Microsoft.Extensions.DependencyInjection;
 using UIKit;
 
-namespace Example.Mobile.iOS
+namespace Example.Mobile.IOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 
@@ -23,7 +24,9 @@ namespace Example.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(Startup.Init());
+            var builder = new ExampleXamarinHostBuilder();
+            builder.Configure();
+            builder.Run(this);
 
             return base.FinishedLaunching(app, options);
         }

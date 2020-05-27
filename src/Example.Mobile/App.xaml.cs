@@ -6,13 +6,11 @@ namespace Example.Mobile
 {
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; set; }
-
-        public App()
+        public App(MainPage mainPage)
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = mainPage;
         }
 
         protected override void OnStart()
