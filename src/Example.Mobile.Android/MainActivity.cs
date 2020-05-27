@@ -5,6 +5,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Example.Mobile.Extensions;
 using Example.Mobile.Hosting;
 using Example.Mobile.Hosting.Extensions;
 
@@ -26,11 +27,10 @@ namespace Example.Mobile.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            var builder = new ExampleXamarinHostBuilder();
-            builder.Configure()
-                .UsePlatform(this);
-
-            builder.Run();
+            new XamarinHostBuilder().ConfigureExampleMobile()
+                .UsePlatform(this)
+                .Build()
+                .RunExampleMobile();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

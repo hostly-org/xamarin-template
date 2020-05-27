@@ -1,4 +1,5 @@
 ﻿using System;
+using Example.Mobile.Extensions;
 using Example.Mobile.Hosting;
 using Example.Mobile.Hosting.Extensions;
 using Foundation;
@@ -26,12 +27,11 @@ namespace Example.Mobile.IOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            var builder = new ExampleXamarinHostBuilder();
 
-            builder.Configure()
-                .UsePlatform(this);
-
-            builder.Run();
+            new XamarinHostBuilder().ConfigureExampleMobile()
+                .UsePlatform(this)
+                .Build()
+                .RunExampleMobile();
 
             return base.FinishedLaunching(app, options);
         }
