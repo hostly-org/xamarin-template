@@ -15,12 +15,20 @@ namespace Example.Mobile.Hosting
 
         public static IXamarinHostBuilder UseApplication<TApp>(this IXamarinHostBuilder builder) where TApp : Application
         {
-            return builder
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddSingleton<Application, TApp>();
-                });
+            return builder.ConfigureServices((context, services) =>
+            {
+                services.AddSingleton<Application, TApp>();
+            });
         }
+
+        public static IXamarinHostBuilder UsePlatform<TPlatform>(this IXamarinHostBuilder builder, TPlatform platform) where TPlatform : IXamarinHostingPlatform
+        {
+            return builder.ConfigureServices((context, services) =>
+            {
+                services.AddSingleton<IXamarinHostingPlatform>(platform);
+            });
+        }
+
         public static IXamarinHostBuilder UseStartup(this IXamarinHostBuilder hostBuilder, Type startupType)
         {
             var startupAssemblyName = startupType.GetTypeInfo().Assembly.GetName().Name;

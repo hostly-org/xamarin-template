@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Example.Mobile.Hosting;
 using Foundation;
 using Microsoft.Extensions.DependencyInjection;
 using UIKit;
+using Xamarin.Forms;
 
 namespace Example.Mobile.IOS
 {
@@ -12,8 +13,11 @@ namespace Example.Mobile.IOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IXamarinHostingPlatform
     {
+        public event EventHandler OnStarted;
+        public event EventHandler OnStopped;
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -25,10 +29,30 @@ namespace Example.Mobile.IOS
         {
             global::Xamarin.Forms.Forms.Init();
             var builder = new ExampleXamarinHostBuilder();
-            builder.Configure();
-            builder.Run(this);
+
+            builder.Configure()
+                .UsePlatform(this);
+
+            builder.Run();
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void FinishedLaunching(UIApplication uiApplication)
+        {
+            base.FinishedLaunching(uiApplication);
+            OnStarted(this, null);
+        }
+
+        public override void WillTerminate(UIApplication uiApplication)
+        {
+            base.WillTerminate(uiApplication);
+            OnStopped(this, null);
+        }
+
+        void IXamarinHostingPlatform.LoadApplication(Application application)
+        {
+            base.LoadApplication(application);
         }
     }
 }

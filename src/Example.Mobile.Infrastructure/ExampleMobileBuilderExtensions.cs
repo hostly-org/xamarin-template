@@ -12,6 +12,7 @@ namespace Example.Mobile.Infrastructure
         public static IExampleMobileBuilder AddInfrastructure(this IExampleMobileBuilder builder)
         {            
             builder.Services.TryAdd(GetServices());
+            builder.Services.AddHostedService<EventBus>();
 
             return builder;
         }

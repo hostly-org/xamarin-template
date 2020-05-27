@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using Example.Mobile.EntityFrameworkCore;
+﻿using Example.Mobile.EntityFrameworkCore;
 using Example.Mobile.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Xamarin.Essentials;
 
 namespace Example.Mobile
@@ -30,12 +27,11 @@ namespace Example.Mobile
             .UseApplication<App>();
         }
 
-        public void Run(object caller)
+        public void Run()
         {
             Host = Builder.Build();
             Host.SeedDatabase();
             Host.StartAsync().Wait();
-            Host.Run(caller);
         }
     }
 }

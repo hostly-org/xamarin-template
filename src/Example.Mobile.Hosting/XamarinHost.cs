@@ -20,27 +20,52 @@ namespace Example.Mobile.Hosting
         private readonly IHostLifetime _hostLifetime;
         private readonly ApplicationLifetime _applicationLifetime;
         private readonly HostOptions _options;
+        private readonly IXamarinHostingPlatform _platform;
+        private readonly Application _application;
+
         private IEnumerable<IHostedService> _hostedServices;
         public IServiceProvider Services { get; }
 
-        public XamarinHost(IServiceProvider services, IHostApplicationLifetime applicationLifetime, ILogger<XamarinHost> logger,
-            IHostLifetime hostLifetime, IOptions<HostOptions> options)
+        public XamarinHost(IServiceProvider services, 
+            IHostApplicationLifetime applicationLifetime, 
+            ILogger<XamarinHost> logger,
+            IHostLifetime hostLifetime, 
+            IOptions<HostOptions> options,
+            IXamarinHostingPlatform platform,
+            Application application)
         {
-            Services = services ?? throw new ArgumentNullException(nameof(services));
-            _applicationLifetime = (applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime))) as ApplicationLifetime;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _hostLifetime = hostLifetime ?? throw new ArgumentNullException(nameof(hostLifetime));
-            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            if (services == null)
+                throw new ArgumentNullException(nameof(services));
+            if (applicationLifetime == null)
+                throw new ArgumentNullException(nameof(applicationLifetime));
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
+            if (hostLifetime == null)
+                throw new ArgumentNullException(nameof(hostLifetime));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            if (platform == null)
+                throw new ArgumentNullException(nameof(platform));
+            if (application == null)
+                throw new ArgumentNullException(nameof(application));
+
+            Services = services;
+            _applicationLifetime = applicationLifetime as ApplicationLifetime;
+            _logger = logger;
+            _hostLifetime = hostLifetime;
+            _options = options.Value;
+            _platform = platform;
+            _application = application;
         }
 
         public void Run(object caller)
         {
-            var callerType = caller.GetType();
+            //var callerType = caller.GetType();
 
-            var methods = callerType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic);
-            var loadApplicationMethod = methods.Where(method => method.Name.Equals("LoadApplication")).FirstOrDefault();
+            //var methods = callerType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic);
+            //var loadApplicationMethod = methods.Where(method => method.Name.Equals("LoadApplication")).FirstOrDefault();
 
-            loadApplicationMethod.Invoke(caller, new object[] { Services.GetRequiredService<Application>() });
+            //loadApplicationMethod.Invoke(caller, new object[] { Services.GetRequiredService<Application>() });
         }
 
         public async Task StartAsync(CancellationToken cancellationToken = default)
@@ -56,6 +81,8 @@ namespace Example.Mobile.Hosting
             }
 
             _applicationLifetime?.NotifyStarted();
+
+            _platform.LoadApplication(_application);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = default)

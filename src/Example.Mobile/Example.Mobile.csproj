@@ -48,6 +48,7 @@
     <ProjectReference Include="..\Example.Mobile.EntityFrameworkCore\Example.Mobile.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Example.Mobile.Hosting\Example.Mobile.Hosting.csproj" />
     <ProjectReference Include="..\Example.Mobile.Infrastructure\Example.Mobile.Infrastructure.csproj" />
+    <ProjectReference Include="..\Example.Mobile.Serialization.UTF8Json\Example.Mobile.Serialization.UTF8Json.csproj" />
   </ItemGroup>
 
   <ItemGroup>
