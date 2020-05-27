@@ -8,7 +8,7 @@ using Example.Mobile.Infrastructure.Commands;
 using Example.Mobile.Infrastructure.Events;
 using Example.Mobile.Infrastructure.Queries;
 
-namespace Example.Mobile.EntityFrameworkCore
+namespace Example.Mobile.EntityFrameworkCore.Extensions
 {
     public static class ExampleMobileBuilderExtensions
     {

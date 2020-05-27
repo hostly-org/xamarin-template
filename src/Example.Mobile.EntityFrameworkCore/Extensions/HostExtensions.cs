@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Example.Mobile.EntityFrameworkCore.DbContexts;
 
-namespace Example.Mobile.EntityFrameworkCore
+namespace Example.Mobile.EntityFrameworkCore.Extensions
 {
     public static class HostExtensions
     {

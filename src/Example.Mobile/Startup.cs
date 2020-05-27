@@ -1,7 +1,7 @@
 ﻿using System;
-using Example.Mobile.EntityFrameworkCore.Sqlite;
+using Example.Mobile.EntityFrameworkCore.Sqlite.Extensions;
 using Example.Mobile.Hosting;
-using Example.Mobile.Infrastructure;
+using Example.Mobile.Infrastructure.Extensions;
 using Example.Mobile.Serialization.UTF8Json.Extensions;
 using Example.Mobile.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +20,6 @@ namespace Example.Mobile
 
             services.AddSingleton<Func<INavigation>>(() => Application.Current?.MainPage?.Navigation);
             services.AddTransient<MainPage>();
-            services.AddTransient<ExampleContentPage>();
         }
     }
 }

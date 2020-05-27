@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
-namespace Example.Mobile
+namespace Example.Mobile.Extensions
 {
     public static class ConfigurationBuilderExtensions
     {

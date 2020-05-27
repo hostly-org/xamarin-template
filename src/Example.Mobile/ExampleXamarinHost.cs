@@ -1,5 +1,7 @@
-﻿using Example.Mobile.EntityFrameworkCore;
+﻿using Example.Mobile.EntityFrameworkCore.Extensions;
+using Example.Mobile.Extensions;
 using Example.Mobile.Hosting;
+using Example.Mobile.Hosting.Extensions;
 using Microsoft.Extensions.Configuration;
 using Xamarin.Essentials;
 

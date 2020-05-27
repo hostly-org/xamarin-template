@@ -1,12 +1,12 @@
 ﻿
 using System;
 using System.Diagnostics;
-using System.Linq;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Example.Mobile.Hosting;
+using Example.Mobile.Hosting.Extensions;
 
 namespace Example.Mobile.Droid
 {

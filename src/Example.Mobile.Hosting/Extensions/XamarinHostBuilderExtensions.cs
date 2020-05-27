@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Xamarin.Forms;
 
-namespace Example.Mobile.Hosting
+namespace Example.Mobile.Hosting.Extensions
 {
     public static class XamarinHostBuilderExtensions
     {
