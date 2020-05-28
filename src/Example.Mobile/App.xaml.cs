@@ -1,18 +1,17 @@
 ﻿using System;
 using Example.Mobile.Views;
+using Hostly;
 using Xamarin.Forms;
 
 namespace Example.Mobile
 {
-    public partial class App : Application
+    public partial class App : Application, IXamarinApplication
     {
-        public static IServiceProvider ServiceProvider { get; set; }
-
-        public App()
+        public App(MainPage mainPage)
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = mainPage;
         }
 
         protected override void OnStart()

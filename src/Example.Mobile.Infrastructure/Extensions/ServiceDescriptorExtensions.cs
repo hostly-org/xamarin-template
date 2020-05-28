@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Example.Mobile.Infrastructure
+namespace Example.Mobile.Infrastructure.Extensions
 {
     public static class ServiceDescriptorExtensions
     {

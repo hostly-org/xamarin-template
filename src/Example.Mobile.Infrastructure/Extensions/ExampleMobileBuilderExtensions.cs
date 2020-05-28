@@ -5,13 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Collections.Generic;
 
-namespace Example.Mobile.Infrastructure
+namespace Example.Mobile.Infrastructure.Extensions
 {
     public static class ExampleMobileBuilderExtensions
     {
         public static IExampleMobileBuilder AddInfrastructure(this IExampleMobileBuilder builder)
         {            
             builder.Services.TryAdd(GetServices());
+            builder.Services.AddHostedService<EventBus>();
 
             return builder;
         }

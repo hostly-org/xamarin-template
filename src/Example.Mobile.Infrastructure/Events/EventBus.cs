@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace Example.Mobile.Infrastructure.Events
 {
-    public class EventBus : IEventBusPublisher, IEventBusConsumer
+    public class EventBus : IEventBusPublisher, IEventBusConsumer, IHostedService
     {
+        private readonly CancellationTokenSource _stoppingCts;
         private readonly List<IEventConsumer> _consumers;
         private readonly IEventStore _eventStore;
         private readonly Channel<IEvent> _channel;
         private readonly ChannelReader<IEvent> _channelReader;
         private readonly ChannelWriter<IEvent> _channelWriter;
-        private readonly object _lock = new object();
 
         private Task _executingTask;        
         public EventBus(IEventStore eventStore)
@@ -21,6 +23,7 @@ namespace Example.Mobile.Infrastructure.Events
             if (eventStore == null)
                 throw new ArgumentNullException(nameof(eventStore));
 
+            _stoppingCts = new CancellationTokenSource();
             _consumers = new List<IEventConsumer>();
             _channel = Channel.CreateUnbounded<IEvent>();
             _channelReader = _channel.Reader;
@@ -31,12 +34,6 @@ namespace Example.Mobile.Infrastructure.Events
 
         public ValueTask<bool> PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            lock(_lock)
-            {
-                if (_executingTask == null)
-                    _executingTask = ExecuteAsync();
-            }            
-
             async Task<bool> AsyncSlowPath(TEvent item)
             {
                 while (await _channelWriter.WaitToWriteAsync())
@@ -63,8 +60,33 @@ namespace Example.Mobile.Infrastructure.Events
             return subscription;
         }
 
-        private async Task ExecuteAsync()
+        public Task StartAsync(CancellationToken cancellationToken = default)
         {
+            _executingTask = ExecuteAsync(_stoppingCts.Token);
+
+            if (_executingTask.IsCompleted)
+                return _executingTask;
+
+            return Task.CompletedTask;
+        }
+        public async Task StopAsync(CancellationToken cancellationToken = default)
+        {
+            if (_executingTask == null)
+                return;
+
+            try
+            {
+                _stoppingCts.Cancel();
+            }
+            finally
+            {
+                await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
+            }
+        }
+
+        private async Task ExecuteAsync(CancellationToken cancellationToken = default)
+        {
+            while(!cancellationToken.IsCancellationRequested)
             while(await _channelReader.WaitToReadAsync())
             {
                 if (_channelReader.TryRead(out var @event))

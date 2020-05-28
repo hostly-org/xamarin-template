@@ -1,18 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+using Example.Mobile.Extensions;
+using Example.Mobile.Hosting;
+using Example.Mobile.Hosting.Extensions;
 using Foundation;
+using Hostly;
+using Hostly.Extensions;
 using UIKit;
+using Xamarin.Forms;
 
-namespace Example.Mobile.iOS
+namespace Example.Mobile.IOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IXamarinHostingPlatform
     {
+        public event EventHandler OnStarted;
+        public event EventHandler OnStopped;
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -23,9 +29,33 @@ namespace Example.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(Startup.Init());
+
+            new XamarinHostBuilder().ConfigureExampleMobile()
+                .UsePlatform(this)
+                .Build()
+                .RunExampleMobile();
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override void FinishedLaunching(UIApplication uiApplication)
+        {
+            base.FinishedLaunching(uiApplication);
+            OnStarted(this, null);
+        }
+
+        public override void WillTerminate(UIApplication uiApplication)
+        {
+            base.WillTerminate(uiApplication);
+            OnStopped(this, null);
+        }
+
+        void IXamarinHostingPlatform.LoadApplication(IXamarinApplication application)
+        {
+            if (typeof(global::Xamarin.Forms.Application).IsAssignableFrom(application.GetType()))
+                base.LoadApplication((global::Xamarin.Forms.Application)application);
+            else
+                throw new ArgumentException("Application supplied is of incorrect type");
         }
     }
 }

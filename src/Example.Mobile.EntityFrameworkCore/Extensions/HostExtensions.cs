@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Example.Mobile.EntityFrameworkCore.DbContexts;
 
-namespace Example.Mobile.EntityFrameworkCore
+namespace Example.Mobile.EntityFrameworkCore.Extensions
 {
     public static class HostExtensions
     {
@@ -14,7 +14,8 @@ namespace Example.Mobile.EntityFrameworkCore
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var context = scope.ServiceProvider.GetRequiredService<ExampleMobileDbContext>())
+                var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory>();
+                using (var context = contextFactory.Create())
                     context.Database.Migrate();
 
                 return host;
