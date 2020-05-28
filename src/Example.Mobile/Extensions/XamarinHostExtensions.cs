@@ -1,5 +1,5 @@
 ﻿using Example.Mobile.EntityFrameworkCore.Extensions;
-using Example.Mobile.Hosting;
+using Hostly;
 
 namespace Example.Mobile.Extensions
 {

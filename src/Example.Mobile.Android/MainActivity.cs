@@ -6,8 +6,8 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Example.Mobile.Extensions;
-using Example.Mobile.Hosting;
-using Example.Mobile.Hosting.Extensions;
+using Hostly;
+using Hostly.Extensions;
 
 namespace Example.Mobile.Droid
 {
@@ -51,9 +51,12 @@ namespace Example.Mobile.Droid
             OnStarted(this, null);
         }
 
-        void IXamarinHostingPlatform.LoadApplication(Xamarin.Forms.Application application)
+        void IXamarinHostingPlatform.LoadApplication(IXamarinApplication application)
         {
-            LoadApplication(application);
+            if (typeof(global::Xamarin.Forms.Application).IsAssignableFrom(application.GetType()))
+                base.LoadApplication((global::Xamarin.Forms.Application)application);
+            else
+                throw new ArgumentException("Application supplied is of incorrect type");
         }
     }
 }

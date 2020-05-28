@@ -1,5 +1,7 @@
-﻿using Example.Mobile.Hosting;
-using Example.Mobile.Hosting.Extensions;
+﻿using Hostly;
+using Hostly.Extensions;
+using Microsoft.Extensions.Configuration;
+using Xamarin.Essentials;
 
 namespace Example.Mobile.Extensions
 {
@@ -7,9 +9,10 @@ namespace Example.Mobile.Extensions
     {
         public static IXamarinHostBuilder ConfigureExampleMobile(this IXamarinHostBuilder builder)
         {
-            return builder.UseAppSettings(typeof(Startup).Assembly)
+            return builder.UseAppSettings<Startup>()
                 .UseStartup<Startup>()
-                .UseApplication<App>();
+                .UseApplication<App>()
+                .ConfigureHostConfiguration(c => c.AddCommandLine(new string[] { $"ContentRoot={FileSystem.AppDataDirectory}" }));
         }
     }
 }

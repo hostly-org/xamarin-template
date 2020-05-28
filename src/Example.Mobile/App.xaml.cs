@@ -1,10 +1,11 @@
 ﻿using System;
 using Example.Mobile.Views;
+using Hostly;
 using Xamarin.Forms;
 
 namespace Example.Mobile
 {
-    public partial class App : Application
+    public partial class App : Application, IXamarinApplication
     {
         public App(MainPage mainPage)
         {

@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hostly" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
@@ -46,7 +47,6 @@
     <ProjectReference Include="..\Example.Mobile.Domain\Example.Mobile.Domain.csproj" />
     <ProjectReference Include="..\Example.Mobile.EntityFrameworkCore.Sqlite\Example.Mobile.EntityFrameworkCore.Sqlite.csproj" />
     <ProjectReference Include="..\Example.Mobile.EntityFrameworkCore\Example.Mobile.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Example.Mobile.Hosting\Example.Mobile.Hosting.csproj" />
     <ProjectReference Include="..\Example.Mobile.Infrastructure\Example.Mobile.Infrastructure.csproj" />
     <ProjectReference Include="..\Example.Mobile.Serialization.UTF8Json\Example.Mobile.Serialization.UTF8Json.csproj" />
   </ItemGroup>

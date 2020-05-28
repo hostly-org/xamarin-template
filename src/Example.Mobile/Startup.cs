@@ -1,9 +1,9 @@
 ﻿using System;
 using Example.Mobile.EntityFrameworkCore.Sqlite.Extensions;
-using Example.Mobile.Hosting;
 using Example.Mobile.Infrastructure.Extensions;
 using Example.Mobile.Serialization.UTF8Json.Extensions;
 using Example.Mobile.Views;
+using Hostly;
 using Microsoft.Extensions.DependencyInjection;
 using Xamarin.Forms;
 

@@ -3,6 +3,8 @@ using Example.Mobile.Extensions;
 using Example.Mobile.Hosting;
 using Example.Mobile.Hosting.Extensions;
 using Foundation;
+using Hostly;
+using Hostly.Extensions;
 using UIKit;
 using Xamarin.Forms;
 
@@ -48,9 +50,12 @@ namespace Example.Mobile.IOS
             OnStopped(this, null);
         }
 
-        void IXamarinHostingPlatform.LoadApplication(Application application)
+        void IXamarinHostingPlatform.LoadApplication(IXamarinApplication application)
         {
-            base.LoadApplication(application);
+            if (typeof(global::Xamarin.Forms.Application).IsAssignableFrom(application.GetType()))
+                base.LoadApplication((global::Xamarin.Forms.Application)application);
+            else
+                throw new ArgumentException("Application supplied is of incorrect type");
         }
     }
 }
