@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Example.Mobile
 {
-    public partial class App : Application, IXamarinApplication
+    public partial class App : Application
     {
         public App(MainPage mainPage)
         {
