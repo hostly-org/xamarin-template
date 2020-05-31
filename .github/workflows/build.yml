@@ -1,0 +1,103 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    # Install NuGet
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+
+      # Install .NET Core
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+
+     # Install MSBuild
+    - name: Setup MSBuild
+      uses: warrenbuckley/Setup-MSBuild@v1
+
+      # Restore Example.Mobile
+    - name: Restore Example.Mobile
+      run: dotnet restore "src/Example.Mobile/Example.Mobile.csproj"
+
+      # Restore Example.Mobile.Android
+    - name: Restore Example.Mobile.Android
+      run: nuget restore "src/Example.Mobile.Android/Example.Mobile.Android.csproj"
+
+      # Restore Example.Mobile.Domain
+    - name: Restore Example.Mobile.Domain
+      run: dotnet restore "src/Example.Mobile.Domain/Example.Mobile.Domain.csproj"
+
+      # Restore Example.Mobile.EntityFrameworkCore
+    - name: Build Example.Mobile.EntityFrameworkCore
+      run: dotnet restore "src/Example.Mobile.EntityFrameworkCore/Example.Mobile.EntityFrameworkCore.csproj"
+
+      # Restore Example.Mobile.EntityFrameworkCore.Sqlite
+    - name: Restore Example.Mobile.EntityFrameworkCore.Sqlite
+      run: dotnet restore "src/Example.Mobile.EntityFrameworkCore.Sqlite/Example.Mobile.EntityFrameworkCore.Sqlite.csproj"
+
+      # Restore Example.Mobile.Infrastructure
+    - name: Restore Example.Mobile.Infrastructure
+      run: dotnet restore "src/Example.Mobile.Infrastructure/Example.Mobile.Infrastructure.csproj"
+
+      # Build Example.Mobile.iOS
+    - name: Restore Example.Mobile.iOS
+      run: nuget restore "src/Example.Mobile.iOS/Example.Mobile.iOS.csproj"
+
+      # Restore Example.Mobile.Migrations
+    - name: Restore Example.Mobile.Migrations
+      run: dotnet restore "src/Example.Mobile.Migrations/Example.Mobile.Migrations.csproj"
+
+      # Restore Example.Mobile.Serialization.UTF8Json
+    - name: Restore Example.Mobile.Serialization.UTF8Json
+      run: dotnet restore "src/Example.Mobile.Serialization.UTF8Json/Example.Mobile.Serialization.UTF8Json.csproj"
+
+      # Build Example.Mobile
+    - name: Build Example.Mobile
+      run: dotnet build "src/Example.Mobile/Example.Mobile.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.Android
+    - name: Build Example.Mobile.Android
+      run: msbuild "src/Example.Mobile.Android/Example.Mobile.Android.csproj" -p:Configuration=Release
+
+      # Build Example.Mobile.Domain
+    - name: Build Example.Mobile.Domain
+      run: dotnet build "src/Example.Mobile.Domain/Example.Mobile.Domain.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.EntityFrameworkCore
+    - name: Build Example.Mobile.EntityFrameworkCore
+      run: dotnet build "src/Example.Mobile.EntityFrameworkCore/Example.Mobile.EntityFrameworkCore.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.EntityFrameworkCore.Sqlite
+    - name: Build Example.Mobile.EntityFrameworkCore.Sqlite
+      run: dotnet build "src/Example.Mobile.EntityFrameworkCore.Sqlite/Example.Mobile.EntityFrameworkCore.Sqlite.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.Infrastructure
+    - name: Build Example.Mobile.Infrastructure
+      run: dotnet build "src/Example.Mobile.Infrastructure/Example.Mobile.Infrastructure.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.iOS
+    - name: Build Example.Mobile.iOS
+      run: msbuild "src/Example.Mobile.iOS/Example.Mobile.iOS.csproj" -p:Configuration=Release
+
+      # Build Example.Mobile.Migrations
+    - name: Build Example.Mobile.Migrations
+      run: dotnet build "src/Example.Mobile.Migrations/Example.Mobile.Migrations.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Build Example.Mobile.Serialization.UTF8Json
+    - name: Build Example.Mobile.Serialization.UTF8Json
+      run: dotnet build "src/Example.Mobile.Serialization.UTF8Json/Example.Mobile.Serialization.UTF8Json.csproj" --configuration Release --no-restore --verbosity normal
+
+      # Test projects
+    #- name: Test
+    #  run: dotnet test --verbosity normal
