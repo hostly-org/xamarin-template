@@ -99,5 +99,5 @@ jobs:
       run: dotnet build "src/Example.Mobile.Serialization.UTF8Json/Example.Mobile.Serialization.UTF8Json.csproj" --configuration Release --no-restore --verbosity normal
 
       # Test projects
-    - name: Test
-      run: dotnet test --verbosity normal
+    #- name: Test
+    #  run: dotnet test --verbosity normal
